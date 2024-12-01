@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class PlayerMovement : MonoBehaviour
+public class PlayerCtrl : MonoBehaviour
 {
     // Move
     [SerializeField] private float moveSpeed = 5f;
@@ -13,13 +13,17 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 smoothVelocity;
     private float smoothTime = 0.1f;
 
-    // Jump
+    [Header("Ground Check")]
+    [SerializeField] private float groundCheckRadius = 0.2f;
+    [SerializeField] private float groundCheckOffset = 0.1f;
+    [SerializeField] private LayerMask groundLayer;  // 인스펙터에서 Ground 레이어 설정 필요
+
+    [Header("Jump Settings")]
     [SerializeField] private float jumpForce = 7f;
-    [SerializeField] private float doubleJumpForce = 6f;  // 이단 점프의 힘
-    [SerializeField] private float maxJumpCooldown = 0.1f;  // 연속 점프 방지용 쿨다운
-    private float jumpCooldown;
-    private bool canDoubleJump = false;  // 이단 점프 가능 여부
-    private bool hasDoubleJumped = false;  // 이단 점프 사용 여부
+    [SerializeField] private float doubleJumpForce = 6f;
+    [SerializeField] private float jumpBufferTime = 0.15f;
+    [SerializeField] private bool canDoubleJump = false;
+    [SerializeField] private bool hasDoubleJumped = false;
 
     // ... existing code ...
     private void Start()
@@ -71,11 +75,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        CheckGroundedState();
         HandleMovementInput();
         HandleJumpInput();
-        UpdateJumpCooldown();
-        CheckGroundedState();
     }
+
 
     private void HandleMovementInput()
     {
@@ -84,69 +88,68 @@ public class PlayerMovement : MonoBehaviour
         moveDirection = new Vector3(horizontal, 0f, vertical).normalized;
     }
 
-    // ... existing code ...
-
     private void HandleJumpInput()
     {
-        if (!Input.GetKeyDown(KeyCode.Space)) return;
-
-        if (IsGrounded() && jumpCooldown <= 0 && !hasDoubleJumped)
+        // 점프 실행
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            // 첫 번째 점프
-            Jump();
-            canDoubleJump = true;
-            jumpCooldown = maxJumpCooldown;
+            if (IsGrounded() && !canDoubleJump && !hasDoubleJumped)
+            {
+                // 첫 번째 점프
+                ExecuteJump(jumpForce);
+                canDoubleJump = true;
+                hasDoubleJumped = false;
+            }
+            else if (canDoubleJump && !hasDoubleJumped)
+            {
+                // 이단 점프
+                ExecuteJump(doubleJumpForce);
+                canDoubleJump = false;
+                hasDoubleJumped = true;
+            }
         }
-        else if (!IsGrounded() && canDoubleJump && !hasDoubleJumped)
-        {
-            // 이단 점프
-            DoubleJump();
-            canDoubleJump = false;
-            hasDoubleJumped = true;
-        }
+    }
+    private void ExecuteJump(float force)
+    {
+        // 수직 속도만 초기화
+        rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+        rb.AddForce(Vector3.up * force, ForceMode.Impulse);
     }
 
     private void CheckGroundedState()
     {
-        if (IsGrounded())
+        if (IsGrounded() && hasDoubleJumped)
         {
-            // 착지했을 때만 모든 점프 관련 상태 초기화
             canDoubleJump = false;
             hasDoubleJumped = false;
-            jumpCooldown = 0f;
         }
     }
-
-    private void UpdateJumpCooldown()
-    {
-        if (jumpCooldown > 0)
-        {
-            jumpCooldown -= Time.deltaTime;
-        }
-    }
-
-
-    private void Jump()
-    {
-        rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-        rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-    }
-
-    private void DoubleJump()
-    {
-        rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-        rb.AddForce(Vector3.up * doubleJumpForce, ForceMode.Impulse);
-    }
-
     private bool IsGrounded()
     {
-        // 지면 체크 개선
-        return Physics.SphereCast(
-            transform.position + Vector3.up * 0.5f,
-            0.4f,  // 구의 반지름
-            Vector3.down,
-            out RaycastHit hit,
-            0.6f   // 체크 거리
+        // 발 위치 계산
+        Vector3 spherePosition = new Vector3(
+            transform.position.x,
+            transform.position.y - groundCheckOffset,
+            transform.position.z
         );
+
+        // OverlapSphere를 사용하여 더 정확한 지면 체크
+        return Physics.OverlapSphere(
+            spherePosition,
+            groundCheckRadius,
+            groundLayer
+        ).Length > 0;
+    }
+
+    private void OnDrawGizmos()
+    {
+        // 지면 체크 범위 시각화
+        Gizmos.color = IsGrounded() ? Color.green : Color.red;
+        Vector3 spherePosition = new Vector3(
+            transform.position.x,
+            transform.position.y - groundCheckOffset,
+            transform.position.z
+        );
+        Gizmos.DrawWireSphere(spherePosition, groundCheckRadius);
     }
 }
