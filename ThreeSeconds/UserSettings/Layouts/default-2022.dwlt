@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1440
     height: 900
   m_ShowMode: 4
-  m_Title: Hierarchy
+  m_Title: Game
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -121,7 +121,7 @@ MonoBehaviour:
   m_MinSize: {x: 400, y: 100}
   m_MaxSize: {x: 32384, y: 16192}
   vertical: 0
-  controlID: 26
+  controlID: 18
   draggingID: 0
 --- !u!114 &6
 MonoBehaviour:
@@ -147,7 +147,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 100}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 27
+  controlID: 19
   draggingID: 0
 --- !u!114 &7
 MonoBehaviour:
@@ -797,9 +797,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 0, y: 3, z: 0}
+    m_Target: {x: -3.3934138, y: 2.1296196, z: 4.7632427}
     speed: 2
-    m_Value: {x: 0, y: 3, z: 0}
+    m_Value: {x: -3.3934138, y: 2.1296196, z: 4.7632427}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -845,20 +845,20 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.24687739, y: 0.6977025, z: -0.2821654, w: 0.6104541}
+    m_Target: {x: 0.16145352, y: 0.8126721, z: -0.26643693, w: 0.49245885}
     speed: 2
-    m_Value: {x: 0.2468763, y: 0.6976994, z: -0.28216416, w: 0.6104514}
+    m_Value: {x: 0.16178975, y: 0.813006, z: -0.26789764, w: 0.49099535}
   m_Size:
-    m_Target: 12.124355
+    m_Target: 9.843558
     speed: 2
-    m_Value: 12.124355
+    m_Value: 9.843558
   m_Ortho:
     m_Target: 0
     speed: 2
     m_Value: 0
   m_CameraSettings:
-    m_Speed: 1.0209845
-    m_SpeedNormalized: 0.50803244
+    m_Speed: 1.0219796
+    m_SpeedNormalized: 0.50853246
     m_SpeedMin: 0.01
     m_SpeedMax: 2
     m_EasingEnabled: 1
@@ -983,9 +983,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 
+      m_SelectedIDs: bcf6ffff
       m_LastClickedID: 0
-      m_ExpandedIDs: 30fbffffa65b0000b05b0000c65b0000
+      m_ExpandedIDs: 30fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1054,7 +1054,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts
+    - Assets/Materials
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -1062,16 +1062,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Scripts
+  - Assets/Materials
   m_LastFoldersGridSize: -1
   m_LastProjectPath: /Users/hanmanseong/github/ThreeSeconds/ThreeSeconds
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 3a5c0000
-    m_LastClickedID: 23610
-    m_ExpandedIDs: 00000000165c0000185c00001a5c00001c5c00001e5c0000205c0000225c0000285c000000ca9a3b
+    m_SelectedIDs: 965c0000
+    m_LastClickedID: 23702
+    m_ExpandedIDs: 00000000165c0000185c00001a5c00001c5c00001e5c0000205c0000225c000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 

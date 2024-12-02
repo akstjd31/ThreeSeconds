@@ -377,6 +377,7 @@
 "Assets/Packages/Maps/Brick Project Studio/_BPS Basic Assets/Common/Scripts and Animations/Windows/opencloseWindow.cs"
 "Assets/Packages/Maps/Brick Project Studio/_BPS Basic Assets/Common/Scripts and Animations/Windows/opencloseWindow1.cs"
 "Assets/Packages/UI/UI pack/Scripts/FillValueNumber.cs"
+"Assets/Scripts/CameraController.cs"
 "Assets/Scripts/PlayerCtrl.cs"
 -langversion:9.0
 /deterministic

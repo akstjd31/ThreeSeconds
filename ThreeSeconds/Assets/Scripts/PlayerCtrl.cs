@@ -15,7 +15,7 @@ public class PlayerCtrl : MonoBehaviour
 
     [Header("Ground Check")]
     [SerializeField] private float groundCheckRadius = 0.2f;
-    [SerializeField] private float groundCheckOffset = 0.1f;
+    [SerializeField] private float groundCheckOffset = 0.1f; // 수정 필요
     [SerializeField] private LayerMask groundLayer;  // 인스펙터에서 Ground 레이어 설정 필요
 
     [Header("Jump Settings")]
@@ -30,8 +30,6 @@ public class PlayerCtrl : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
 
-        // 리지드바디 설정 추가
-        //rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
         rb.mass = 1f;
         rb.drag = 0.5f;
         rb.angularDrag = 0.05f;
@@ -81,11 +79,21 @@ public class PlayerCtrl : MonoBehaviour
     }
 
 
-    private void HandleMovementInput()
+private void HandleMovementInput()
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
-        moveDirection = new Vector3(horizontal, 0f, vertical).normalized;
+
+        // 카메라의 전방 벡터를 기준으로 이동 방향 설정
+        Vector3 cameraForward = Camera.main.transform.forward;
+        Vector3 cameraRight = Camera.main.transform.right;
+
+        // y축 제거하여 수평면에서만 이동
+        cameraForward.y = 0f;
+        cameraRight.y = 0f;
+
+        // 카메라 방향에 따른 이동 방향 계산
+        moveDirection = (cameraForward * vertical + cameraRight * horizontal).normalized;
     }
 
     private void HandleJumpInput()
