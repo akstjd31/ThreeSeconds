@@ -12,6 +12,7 @@ public class PlayerCtrl : MonoBehaviour
     private Vector3 moveDirection;
     private Vector3 smoothVelocity;
     private float smoothTime = 0.1f;
+    private SurfaceContactDetector surfaceContactDetector;
 
     [Header("Ground Check")]
     [SerializeField] private float groundCheckRadius = 0.2f;
@@ -34,11 +35,16 @@ public class PlayerCtrl : MonoBehaviour
         rb.drag = 0.5f;
         rb.angularDrag = 0.05f;
         rb.interpolation = RigidbodyInterpolation.Interpolate;
+
+        surfaceContactDetector = this.GetComponent<SurfaceContactDetector>();
     }
 
     private void FixedUpdate()
     {
-        Move();
+        if (!surfaceContactDetector.GameOver())
+        {
+            Move();
+        }
     }
 
     private void Move()

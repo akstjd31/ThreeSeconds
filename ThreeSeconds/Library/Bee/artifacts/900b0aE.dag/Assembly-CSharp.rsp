@@ -379,6 +379,7 @@
 "Assets/Packages/UI/UI pack/Scripts/FillValueNumber.cs"
 "Assets/Scripts/CameraController.cs"
 "Assets/Scripts/PlayerCtrl.cs"
+"Assets/Scripts/SurfaceContactDetector.cs"
 -langversion:9.0
 /deterministic
 /optimize+

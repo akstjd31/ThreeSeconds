@@ -20,14 +20,21 @@ public class CameraController : MonoBehaviour
     private float lastMouseX;
     private Vector3 lastTargetPosition;
 
+    private SurfaceContactDetector surfaceContactDetector;
+
     private void Start()
     {
         lastTargetPosition = target.position;
+        surfaceContactDetector = target.GetComponent<SurfaceContactDetector>();
     }
 
     private void Update()
     {
-        HandleMouseInput();
+        if (!surfaceContactDetector.GameOver())
+        {
+            HandleMouseInput();
+        }
+
         HandlePlayerMovement();
         UpdateCameraPosition();
     }
